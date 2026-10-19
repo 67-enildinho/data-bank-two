@@ -1,3 +1,16 @@
+/*
+ _____________       __          __      __      __                _________            _____________           _  
+|   __________|     |  \        |  |    |  |    |  |              |   ___    \         |   _______   |         | |                  
+|  |                |    \      |  |    |  |    |  |              |  |    \   \        |  |       |  |         | |                 
+|  |_______         |  |\  \    |  |    |  |    |  |              |  |     \   \       |  |       |  |         | |               
+|   _______|        |  |  \  \  |  |    |  |    |  |              |  |      |   |      |  |       |  |         | |               
+|  |                |  |    \  \|  |    |  |    |  |              |  |      |   |      |  |       |  |         | |           
+|  |                |  |     \     |    |  |    |  |              |  |     /   /       |  |       |  |         |_|               
+|  |__________      |  |       \   |    |  |    |  |_________     |  |____/   /        |  |_______|  |          _            
+|_____________|     |__|        \__|    |__|    |____________|    |_________/          |_____________|         |_|                   
+*/
+
+
 /* =========================================================
    BANCO DE DADOS II – MySQL 8.x
    SISTEMA EMPRESA+
@@ -16,6 +29,7 @@ CREATE DATABASE empresa
   COLLATE utf8mb4_general_ci;
 
 USE empresa;
+
 
 -- select id_produto, nome as 'Nome Do Produto'  from produto;
 
@@ -1421,403 +1435,679 @@ FROM pedido;
 
 describe produto;
 
+
+
 select * from cliente;
 select * from produto;
 select * from categoria order by id_categoria;
 select * from pedido;
 
--- exercício 11-1
-select id_categoria, nome from categoria order by id_categoria;
 
--- exercício 11-2
-select * from Cliente limit 10;
 
--- exercício 11-3
-select * from Produto limit 10;
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 11
+   Primeiras Consultas com SELECT
+   ========================================================= */
+   
+select * from categoria order by id_categoria;
 
--- exercício 11-4
-select * from Pedido limit 10;
+select * from cliente limit 10;
 
--- exercício 12-1
+select * from produto limit 10;
+
+select * from pedido limit 10;
+
+
+
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 12
+   Selecionando Colunas
+   ========================================================= */
+   
 select nome from cliente limit 15;
-
--- exercício 12-2
+   
 select nome, email from cliente limit 15;
 
--- exercício 12-3
 select nome, preco, estoque from produto limit 15;
 
--- exercício 12-4
 select data_pedido, valor from pedido limit 15;
 
--- exercício 13-1
-select * from cliente where id_cliente <= 20;
 
--- exercício 13-2
-select id_cliente, nome, email, ativo from cliente where ativo = 0 and id_cliente <= 40;
 
--- exercício 13-3
-select id_cliente, nome, email, data_cadastro from cliente where date(data_cadastro) <= '2025-06-27' and date(data_cadastro) >= '2025-01-01';
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 13
+   Filtrando Registros com WHERE
+   ========================================================= */
 
--- exercício 13-4
-select id_cliente, nome, email, data_cadastro from cliente where date(data_cadastro) <= '2026-06-16' and date(data_cadastro) >= '2026-01-01';
+-- 1. Listem os clientes ativos cujo identificador esteja entre 1 e 20. 
+select * from cliente where id_cliente >= 1 and id_cliente <= 20;
+ 
+-- 2. Listem os clientes inativos cujo identificador esteja entre 1 e 40. 
+select * from cliente where ativo = 0 and id_cliente >=1 and id_cliente <= 40;
 
--- exercício 14-1
+-- 3. Listem os clientes cadastrados durante o primeiro semestre de 2025. 
+select * from cliente where data_cadastro >= '2025-01-01' and data_cadastro <= '2025-06-30';
+
+-- 4. Listem os clientes cadastrados durante o primeiro semestre de 2026
+select * from cliente where data_cadastro >= '2026-01-01' and data_cadastro <= '2026-06-30';
+
+
+
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 14
+   Operadores de Comparação
+   ========================================================= */
+
+-- 1. Listem produtos com preço superior a R$ 2.000,00. 
 select * from produto where preco > 2000.00;
 
--- exercício 14-2
+-- 2. Listem produtos com preço inferior a R$ 80,00. 
 select * from produto where preco < 80.00;
 
--- exercício 14-3
+-- 3. Listem produtos com estoque superior a 60 unidades. 
 select * from produto where estoque > 60;
 
--- exercício 14-4
+-- 4. Listem produtos com estoque menor ou igual a 10 unidades.
 select * from produto where estoque <= 10;
 
--- exercício 15-1
-select * from produto where preco > 500 and estoque < 20;
 
--- exercício 15-2
-select * from cliente where ativo = 1 and date(data_cadastro) >= '2025-01-07' and date(data_cadastro) <= '2026-01-01';
 
--- exercício 15-3
-select * from pedido where valor > 3000.00 and desconto = 10.00;
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 15
+   Operador AND
+   ========================================================= */
 
--- exercício 15-4
-select * from produto where estoque > 30 and preco < 300.00; 
+-- 1. Listem produtos com preço superior a R$ 500,00 e estoque menor que 20 unidades. 
+select * from produto where preco > 500.00 and estoque < 20;
 
--- exercício 16-1
+-- 2. Listem clientes ativos cadastrados durante o ano de 2025. 
+select * from cliente where ativo = 1 and data_cadastro >= '2025-01-01' and data_cadastro <= '2025-12-31';
+
+-- 3. Listem pedidos com valor superior a R$ 3.000,00 e desconto igual a 10%. 
+select * from pedido where valor > 3000.00 and desconto = 10;
+
+-- 4. Listem produtos com estoque superior a 30 unidades e preço inferior a R$ 300,00.
+select * from produto where estoque > 30 and preco < 300.00;
+
+
+
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 16
+   Operador OR
+   ========================================================= */
+   
+-- 1. Listem clientes inativos ou clientes sem e-mail. 
 select * from cliente where ativo = 0 or email = null;
 
--- exercício 16-2
-select id_produto, nome, preco, estoque from produto where preco < 50.00 or preco >3000.00;
+-- 2. Listem produtos com preço inferior a R$ 50,00 ou superior a R$ 3.000,00. 
+select * from produto where preco < 50.00 or preco > 3000.00;
 
--- exercício 16-3
-Select id_pedido, id_cliente, valor, desconto from pedido where desconto = 15 or desconto=20;
+-- 3. Listem pedidos com desconto de 15% ou 20%. 
+select * from pedido where desconto = 15 or desconto = 20;
 
--- exercício 16-4 ***
-select id_produto, nome, preco, estoque from produto where estoque < 10 or estoque > 80;
+-- 4. Listem produtos com estoque inferior a 10 ou superior a 80 unidades.
+select * from produto where estoque < 10 or estoque > 80;
 
--- exercício 17-1
-select id_cliente, nome, email from cliente where nome like 'A%';
 
--- exercício 17-2
-select id_cliente, nome, email from cliente where nome like 'M%';
 
--- exercício 17-3
-select id_produto, nome, preco, estoque from produto where nome like '%USB%';
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 17
+   Pesquisando com LIKE
+   ========================================================= */
+   
+-- 1. Listem clientes cujo nome comece com a letra A.
+select * from cliente where nome like 'A%';
+   
+-- 2. Listem clientes cujo nome comece com a letra M.
+select * from cliente where nome like 'M%';
 
--- exercício 17-4
-select id_produto, nome, preco, estoque from produto where nome like 'Monitor%';
+-- 3. Listem produtos contendo a palavra USB.
+select * from produto where nome like '%USB%';
 
--- exercício 17-5
-select id_cliente, nome, email from cliente where email like '%Outlook%' and nome like 'R%';
+-- 4. Listem produtos cujo nome comece com Monitor.
+select * from produto where nome like 'MONITOR%';
 
--- Exercício 18-1
+-- 5. Listem clientes que utilizam e-mail do Outlook e cujo nome comece com R.  
+select * from cliente where email like '%outlook%' and nome like 'R%';
+
+
+
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 18
+   Trabalhando com NULL
+   ========================================================= */
+   
+-- 1. Listem todos os clientes sem e-mail. 
 select * from cliente where email is null;
-
--- exercício 18-2
+ 
+-- 2. Listem os clientes ativos sem e-mail.
 select * from cliente where email is null and ativo > 0;
 
--- exercício 18-3
-select * from cliente where email is null and ativo  <1;
+-- 3. Listem os clientes inativos sem e-mail. 
+select * from cliente where email is null and ativo < 1;
 
--- exercício 18-4
-Select count(*) AS cliente_sem_email from cliente where email is null;
+-- 4. Informem a quantidade total de clientes sem e-mail.  
+select count(*) as Cliente_sem_email from cliente where email is null;
 
--- exercício 18-5
-Select count(*) AS cliente_com_email from cliente where email is not null;
+-- 5. Informem a quantidade total de clientes que possuem e-mail. 
+select count(*) as Cliente_com_email from cliente where email is not null;
 
--- exercício 19-1
-Select * from produto where preco between 400.00 and 600.00;
 
--- exercício 19-2
+
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 19
+   Operador BETWEEN
+   ========================================================= */
+
+-- 1. Listem produtos com preço entre R$ 400,00 e R$ 600,00. 
+select * from produto where preco between 400.00 and 600.00;
+
+-- 2. Listem produtos com estoque entre 10 e 20 unidades.
 select * from produto where estoque between 10 and 20;
 
--- exercício 19-3
+-- 3. Listem pedidos com valores entre R$ 2.000,00 e R$ 3.000,00. 
 select * from pedido where valor between 2000.00 and 3000.00;
 
--- exercício 19-4
-select * from cliente where data_cadastro between '2025-07-01' and '2025-12-21';
+-- 4. Listem clientes cadastrados entre julho e dezembro de 2025.  
+select * from cliente where data_cadastro between '2025-07-01' and '2025-12-31';
 
--- exercício 20-1
-select * from produto where id_categoria IN (2,4,6);
 
--- exercício 20-2
-select * from produto where id_categoria IN (9,10,11);
 
--- exercício 20-3
-select * from pedido where desconto in (5,15,20);
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 20
+   Operador IN 
+   ========================================================= */
+   
+-- 1. Listem produtos das categorias de identificadores 2, 4 e 6. 
+select * from produto where id_categoria in (2, 4, 6);
 
--- exercício 20-4
-select * from cliente where id_cliente in (5,10,15,20,25);
+-- 2. Listem produtos das categorias de identificadores 9, 10 e 11.  
+select * from produto where id_categoria in (9, 10, 11);
 
--- exercício 21-1
-Select distinct desconto from pedido;
+-- 3. Listem pedidos com descontos de 5%, 15% ou 20%. 
+select * from pedido where desconto in (5, 15, 20);
 
--- exercício 21-2
-Select distinct ativo from cliente;
+-- 4. Listem clientes cujos identificadores sejam 5, 10, 15, 20 e 25. 
+select * from cliente where id_cliente in (5, 10, 15, 20, 25);
 
--- exercício 21-3
-Select distinct year(data_pedido) AS ano from pedido;
 
--- exercício 21-4
-Select distinct id_categoria from produto;
 
--- exercício 22-1
-Select * from cliente ORDER BY nome limit 20;
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 21
+   Eliminando Duplicidades
+   ========================================================= */
+   
+-- 1. Listem todos os descontos existentes sem repetição. 
+select distinct desconto from pedido;
 
--- exercício 22-2
-Select * from produto order by preco DESC limit 15;
+-- 2. Listem os diferentes status existentes no cadastro de clientes. 
+select distinct ativo from cliente;
 
--- exercício 22-3
-Select * from pedido order by data_pedido DESC limit 20;
+-- 3. Listem os anos em que ocorreram pedidos, sem repetição. 
+select distinct date_format(data_pedido, '%Y') as ano from pedido order by ano;
 
--- exercício 22-4
+-- 4. Listem os identificadores das categorias utilizadas pelos produtos, sem repetição.  
+select distinct id_categoria from produto;
+
+
+
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 22
+   Ordenando Resultados 
+   ========================================================= */
+   
+-- 1. Listem os 20 primeiros clientes em ordem alfabética. 
+select * from cliente order by nome limit 20;
+
+-- 2. Listem os 15 produtos de maior preço.  
+select * from produto order by preco desc limit 15;
+
+-- 3. Listem os 20 pedidos mais recentes.  
+select * from pedido order by data_pedido desc limit 20;
+
+-- 4. Listem 20 produtos ordenados por categoria e, dentro de cada categoria, pelo nome.  
 select * from produto order by id_categoria, nome limit 20;
 
--- exercício 23-1
+
+
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 23
+   Limitando Resultados 
+   ========================================================= */
+
+-- 1. Exibam os cinco primeiros clientes cadastrados.
 select * from cliente order by data_cadastro limit 5;
 
--- exercício 23-2
-select * from produto order by preco DESC limit 10;
-
--- exercício 23-3
-select * from produto order by estoque limit 5;
-
--- exercício 23-4
-select * from pedido order by valor DESC limit 10;
-
--- exercício 24-1
-select * from produto order by id_produto limit 10 offset 0;
-
--- exercício 24-2
-select * from produto order by id_produto limit 10 offset 10;
-
--- exercício 24-3
-select * from produto order by id_produto limit 10 offset 20;
-
--- exercício 24-4
-select * from produto order by id_produto limit 10 offset 40;
-
--- exercício 25-1
-select * from cliente where ativo = 1 and nome like 'M%' limit 15;
-
--- exercício 25-2
-select * from produto where preco between 200 and 800 and estoque > 30 limit 25;
-
--- exercício 25-3
-select * from pedido where valor > 1000 and desconto in (10,20) order by valor desc limit 20;
-
--- exercício 25-4
-select * from cliente where email like '%gmail.com' and data_cadastro like '2025%';
-
--- exercício 26-1
+-- 2. Exibam os dez produtos mais caros. 
 select * from produto order by preco desc limit 10;
 
--- exercício 26-2
-select * from produto order by estoque limit 10;
+-- 3. Exibam os cinco produtos com menor estoque. 
+select * from produto order by estoque limit 5;
 
--- exercício 26-3
-select * from cliente order by data_cadastro desc limit 15;
+-- 4. Exibam os dez pedidos de maior valor.  
+select * from pedido order by valor desc limit 10;
 
--- exercício 26-4
+
+
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 24
+   Paginação
+   ========================================================= */
+
+-- 1. Exibam a primeira página de produtos. 
+select * from produto order by id_produto limit 10 offset 0;
+
+-- 2. Exibam a segunda página de produtos.  
+select * from produto order by id_produto limit 10 offset 10;
+
+-- 3. Exibam a terceira página de produtos. 
+select * from produto order by id_produto limit 10 offset 20;
+
+-- 4. Exibam a quinta página de produtos.  
+select * from produto order by id_produto limit 10 offset 40;
+
+
+
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 25
+   Combinando Operadores 
+   ========================================================= */
+
+-- 1. Listem clientes ativos cujo nome comece com M, exibindo no máximo 15 registros. 
+select * from cliente where nome like 'M%' limit 15;
+
+-- 2. Listem produtos entre R$ 200,00 e R$ 800,00 com estoque superior a 30 unidades. 
+select * from produto where preco between 200.00 and 800.00 and estoque > 30;
+
+-- 3. Listem os 20 maiores pedidos acima de R$ 1.000,00 com descontos de 10% ou 20%. 
+select * from pedido where valor > 1000.00 and desconto in (10, 20) order by valor desc;
+
+-- 4. Listem clientes do Gmail cadastrados durante o ano de 2025. 
+select * from cliente where email like '%gmail.com' and data_cadastro between '2025-01-01' and '2025-12-31' order by nome asc; 
+
+
+
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 26
+   Relatórios Comerciais
+   ========================================================= */
+   
+-- 1. Exibam os dez produtos mais caros.  
+select * from produto order by preco desc limit 10;
+
+-- 2. Exibam os dez produtos com menor estoque. 
+select * from produto order by estoque asc limit 10;
+
+-- 3. Exibam os 15 clientes cadastrados mais recentemente.  
+select * from cliente order by data_cadastro asc limit 15;
+
+-- 4. Exibam os 20 pedidos de maior valor.  
 select * from pedido order by valor desc limit 20;
 
--- exercício 26-5
-select * from produto where estoque > 0 order by preco limit 10;
+-- 5. Exibam os dez produtos mais baratos que ainda possuam estoque. 
+select * from produto where estoque > 0 order by preco asc limit 10; 
 
--- exercício 27-1
-select * from cliente where email is null order by nome;
 
--- exercício 27-2
-select * from produto where estoque <= 10 order by estoque;
 
--- exercício 27-3
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 27
+   Auditoria de Cadastros 
+   ========================================================= */
+
+-- 1. Localizem todos os clientes sem e-mail.  
+select * from cliente where email is null order by nome asc;
+
+-- 2. Localizem os produtos com estoque menor ou igual a 10 unidades.  
+select * from produto where estoque <= 10 order by estoque asc;
+
+-- 3. Exibam os 20 pedidos sem desconto de maior valor.  
 select * from pedido where desconto = 0 order by valor desc limit 20;
 
--- exercíci0 27-4
+-- 4. Localizem os produtos com preço superior a R$ 3.000,00.  
 select * from produto where preco > 3000 order by preco desc;
 
--- exercício 27-5
-select * from cliente where ativo = 0 order by data_cadastro desc limit 15;
+-- 5. Exibam os 15 clientes inativos cadastrados mais recentemente. 
+select * from cliente where ativo = 0 order by data_cadastro asc;
 
--- exercício 28-1
-select * from cliente where email like '%gmail.com' order by nome limit 20;
 
--- exercício 28-2
-select * from cliente where email like '%outlook.com' order by nome limit 20;
 
--- exercício 28-3
-select * from cliente where nome like 'S%';
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 28
+   Consultas para o Marketing
+   ========================================================= */
 
--- exercício 28-4
-select * from cliente order by data_cadastro DESC limit 20;
+-- 1. Exibam os 20 primeiros clientes do Gmail em ordem alfabética.  
+select id_cliente, nome, email from cliente where email like '%@gmail.com' order by nome asc limit 20;
 
--- exercício 28-5
-select * from cliente where ativo = 1 and nome like 'A%' or nome like'B%' order by nome limit 25;
+-- 2. Exibam os 20 primeiros clientes do Outlook em ordem alfabética.  
+select id_cliente, nome, email from cliente where email like '%@outlook.com' order by nome asc limit 20;
 
--- exercício 29-1
-select id_produto, nome, preco, estoque from produto order by preco limit 20;
+-- 3. Localizem clientes cujo nome comece com S.
+select id_cliente, nome, email from cliente where nome like 'S%' order by nome asc;
 
--- exercício 29-2
-select id_produto, nome, preco, estoque from produto order by estoque DESC limit 20;
+-- 4. Exibam os 20 clientes cadastrados mais recentemente em 2026.  
+select id_cliente, nome, email, data_cadastro from cliente where data_cadastro like '2026%' order by data_cadastro desc limit 20;
 
--- exercício  29-3
-select id_pedido, id_cliente, data_pedido, valor, desconto from pedido order by valor DESC limit 20;
+-- 5. Localizem clientes ativos cujo nome comece com A ou B
+select id_cliente, nome, email, ativo from cliente where (nome like "A%" or nome like "B%") and ativo = 1 order by nome asc;
 
--- exercício  29-4
-select id_cliente, nome, email, ativo from cliente order by nome limit 20;
 
--- exercício  29-5
-select id_pedido, id_cliente, data_pedido, valor, desconto from pedido order by data_pedido DESC limit 15; 
 
--- exercício 30-1
-select
-p.id_pedido,
-p.data_pedido, 
-p.valor,
-c.nome
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 29
+   Relatórios Gerenciais 
+   ========================================================= */
+
+-- 1. Exibam os 20 produtos de menor preço. 
+select id_produto, nome, preco, estoque from produto order by preco asc limit 20;
+ 
+-- 2. Exibam os 20 produtos com maior estoque.  
+select id_produto, nome, preco, estoque from produto order by estoque desc limit 20;
+
+-- 3. Exibam os 20 pedidos de maior valor.  
+select id_pedido, id_cliente, data_pedido, valor, desconto from pedido order by valor desc limit 20;
+
+-- 4. Exibam os 20 clientes em ordem alfabética.  
+select * from cliente order by nome asc limit 20;
+
+-- 5. Exibam os 15 pedidos mais recentes. 
+select * from pedido order by data_pedido asc limit 15;
+
+
+
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 30
+   INNER JOIN: Cliente e Pedido 
+   ========================================================= */
+
+-- 1. Exiba o identificador do pedido, a data, o valor e o nome do cliente.  
+select p.id_pedido, p.data_pedido,  p.valor, c.nome
+from pedido as p
+inner join
+cliente as c 
+on p.id_pedido = c.id_cliente;
+
+-- 2. Exiba somente os pedidos com valor superior a R$ 1.000,00, apresentando também o nome do cliente.
+select p.id_pedido, p.data_pedido,  p.valor, c.nome
 from pedido as p
 inner join
 cliente as c
-on 
-p.id_pedido = c.id_cliente;
-
--- exercício 30-2
-select
-p.id_pedido,
-p.data_pedido, 
-p.valor,
-c.nome
-from pedido as p
-inner join
-cliente as c
-on 
-p.id_pedido = c.id_cliente
+on p.id_pedido = c.id_cliente
 where valor > 1000;
 
--- exercício 31-1
-select 
-c.id_cliente,
-c.nome,
-p.id_pedido,
-p.data_pedido,
-p.valor
+
+
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 31
+   LEFT JOIN: Clientes com e sem Pedidos 
+   ========================================================= */
+
+-- 1. Exiba todos os clientes e seus respectivos pedidos, quando existirem. 
+select  c.id_cliente, c.nome, p.id_pedido, p.data_pedido, p.valor
 from cliente as c 
 left join
 pedido as p
-on
-c.id_cliente = p.id_pedido;
+on c.id_cliente = p.id_pedido;
 
--- exercício 31-2
-select 
-c.id_cliente,
-c.nome
+-- 2. Exiba somente os clientes que nunca realizaram pedidos. 
+select  c.id_cliente, c.nome
 from cliente c 
 left join
 pedido p
-on
-p.id_cliente = c.id_cliente
+on p.id_cliente = c.id_cliente
 where p.id_pedido is null;
 
--- exercício 32-1
-select 
-c.id_cliente,
-c.nome,
-p.id_pedido,
-p.valor
-from pedido p
-right join
-cliente c
-on
-c.id_cliente = p.id_cliente;
 
--- exercício 32-2
-select 
-c.id_cliente,
-c.nome,
-c.email,
-p.id_pedido,
-p.data_pedido,
-p.valor
+
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 32
+   RIGHT JOIN 
+   ========================================================= */
+
+-- 1. Exiba todos os clientes e seus pedidos utilizando RIGHT JOIN.  
+select c.id_cliente, c.nome, p.id_pedido, p.valor
 from pedido p
 right join
 cliente c
-on
-p.id_pedido = c.id_cliente
+on c.id_cliente = p.id_cliente;
+
+-- 2. Exiba todos os clientes ativos e seus respectivos pedidos, mantendo também no resultado os clientes ativos que eventualmente não possuam pedidos.
+select  c.id_cliente, c.nome, c.email, p.id_pedido, p.data_pedido, p.valor
+from pedido p
+right join
+cliente c
+on p.id_pedido = c.id_cliente
 where ativo = 1;
 
--- exercício 33-1
-select
-p.id_pedido,
-po.id_produto,
-po.quantidade,
-po.preco_unitario
-from pedido as p
-inner join
-pedido_item as po
-on 
-p.id_pedido = po.id_pedido;
 
--- exercício 33-2
-select
-p.id_pedido,
-po.id_produto,
-po.quantidade,
-po.preco_unitario
+
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 33
+   Pedido e Itens 
+   ========================================================= */
+
+-- 1. Exiba o identificador do pedido, o identificador do produto, a quantidade e o preço unitário.  
+select p.id_pedido, po.id_produto, po.quantidade, po.preco_unitario
 from pedido as p
 inner join
 pedido_item as po
-on 
-p.id_pedido = po.id_pedido
+on p.id_pedido = po.id_pedido;
+
+-- 2. Exiba somente os itens cuja quantidade seja maior que 1.  
+select p.id_pedido, po.id_produto, po.quantidade, po.preco_unitario
+from pedido as p
+inner join
+pedido_item as po 
+on p.id_pedido = po.id_pedido
 where po.quantidade > 1;
 
 
--- 34-1
-select
-p.id_pedido,
-pr.nome,
-pi.preco_unitario,
-pi.quantidade
+
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 34
+   Pedido, Item e Produto 
+   ========================================================= */
+
+-- 1. Exiba o identificador do pedido, o nome do produto, a quantidade e o preço unitário.
+select p.id_pedido, pr.nome, pi.preco_unitario, pi.quantidade
 from pedido as p
-inner join pedido_item as pi
-on
-p.id_pedido = pi.id_pedido
-inner join produto as pr
-on
-pr.id_produto = pi.id_produto;
+inner join 
+pedido_item as pi
+on p.id_pedido = pi.id_pedido
+inner join 
+produto as pr
+on pr.id_produto = pi.id_produto;
 
-
--- 34-2
-select
-p.id_pedido,
-pr.nome,
-pi.preco_unitario,
-pi.quantidade
+-- 2. Exiba apenas produtos cujo preço unitário registrado na venda seja superior a R$ 1.000,00.  
+select p.id_pedido, pr.nome, pi.preco_unitario, pi.quantidade
 from pedido as p
-inner join pedido_item as pi
-on
-p.id_pedido = pi.id_pedido
-inner join produto as pr
-on
-pr.id_produto = pi.id_produto
-where pi.preco_unitario > 1000
-order by pi.preco_unitario;
+inner join 
+pedido_item as pi 
+on p.id_pedido = pi.id_pedido
+inner join 
+produto as pr
+on pr.id_produto = pi.id_produto
+where pi.preco_unitario > 1000 order by pi.preco_unitario;
 
 
 
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 35
+   Cliente, Pedido e Itens 	
+   ========================================================= */
+
+-- 1. Exiba o nome do cliente, o identificador do pedido, o identificador do produto e a quantidade. 
+select c.nome, p.id_pedido, pr.id_produto, p.quantidade
+from cliente as c
+inner join 
+pedido as p
+on c.id_cliente = p.id_cliente
+inner join 
+produto as pr
+on pr.id_produto = p.id_produto;
+
+-- 2. Exiba somente os registros de clientes ativos realizados durante o ano de 2026.  
+select c.nome, p.id_pedido, p.data_pedido, pr.id_produto, p.quantidade
+from cliente as c
+inner join 
+pedido as p
+on c.id_cliente = p.id_cliente
+inner join 
+produto as pr
+on pr.id_produto = p.id_produto
+where p.data_pedido >= '2026-01-01' and p.data_pedido <= '2026-12-31';
 
 
 
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 36
+   Cliente, Pedido, Item e Produto
+   ========================================================= */
+
+-- 1. Exiba o nome do cliente, a data do pedido, o nome do produto, a quantidade e o preço unitário.
+select c.nome, p.data_pedido, pr.nome, p.quantidade, pr.preco
+from cliente as c
+inner join 
+pedido as p
+on c.id_cliente = p.id_cliente
+inner join 
+produto as pr
+on pr.id_produto = p.id_produto;
+
+-- 2. Exiba apenas compras com quantidade maior que 1 e preço unitário superior a R$ 500,00.  
+select c.nome, p.data_pedido, pr.nome, p.quantidade, pr.preco
+from cliente as c
+inner join 
+pedido as p
+on c.id_cliente = p.id_cliente
+inner join
+produto as pr
+on pr.id_produto = p.id_produto
+where p.quantidade > 1 and pr.preco >500.00;
 
 
-/* 
-              ........     .           .    .   .          ....          ........               .  . .           ......
-              .            .   .       .    .   .          .    .       .         .            .                     .
-              .            .     .     .    .   .          .     .      .         .           .   . . .             .
-              ......       .       .   .    .   .          .     .      .         .           .        .           .
-              .            .         . .    .   .          .    .       .         .           .          .        .
-              .........    .           .    .   ........   .  .           ........              . . . . .        .
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 37
+   Produto e Categoria 
+   ========================================================= */
+
+-- 1. Exiba o nome do produto, preço, estoque e nome da categoria.  
+select pr.nome, pr.preco, pr.estoque, c.nome
+from produto as pr
+inner join
+categoria as c
+on pr.id_categoria = c.id_categoria;
+
+-- 2. Exiba somente produtos pertencentes às categorias Software, Segurança e Energia.   
+select pr.nome, pr.preco, pr.estoque, c.nome
+from produto as pr
+inner join
+categoria as c
+on pr.id_categoria = c.id_categoria
+where c.nome in ('Software', 'Segurança', 'Energia');
+
+
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 38
+   Relatório com Cinco Tabelas 
+   ========================================================= */
+
+-- 1. Exiba nome do cliente, data do pedido, produto, categoria, quantidade e preço unitário.  
+select c.nome, p.data_pedido, pr.nome, ca.nome, p.quantidade, pr.preco
+from cliente as c
+inner join
+pedido as p
+on c.id_cliente = p.id_cliente
+inner join
+produto as pr
+on pr.id_produto = p.id_produto
+inner join
+categoria as ca
+on pr.id_categoria = ca.id_categoria;
+
+-- 2. Exiba somente as vendas de produtos das categorias Monitores, Software ou Fotografia, realizadas por clientes ativos. 
+select c.nome, p.data_pedido, pr.nome, ca.nome, p.quantidade, pr.preco
+from cliente as c
+inner join
+pedido as p
+on c.id_cliente = p.id_cliente
+inner join
+produto as pr
+on pr.id_produto = p.id_produto
+inner join
+categoria as ca
+on pr.id_categoria = ca.id_categoria
+where ca.nome in ('Monitores', 'Software', 'Fotografia') and c.ativo = 1;
+
+
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 39
+   Registros sem Correspondência 
+   ========================================================= */
+
+-- 1. Localize os clientes que nunca realizaram pedidos.  
+select c.id_cliente, c.nome, c.email
+from cliente as c
+left join
+pedido as p
+on c.id_cliente = p.id_cliente
+where p.id_pedido is null;
+
+-- 2. Localize as categorias que não possuem produtos cadastrados. 
+select ca.id_categoria, ca.nome
+from categoria as ca
+left join
+produto as pr
+on ca.id_categoria = pr.id_categoria
+where pr.id_produto is null;
+
+
+/* =========================================================
+   SOLUÇÃO – EXERCÍCIO PRÁTICO 40
+   Desafio Integrado de JOIN
+   ========================================================= */
+
+-- 1. Crie um relatório contendo nome do cliente, identificador e data do pedido, nome do produto, categoria, quantidade e preço unitário, exibindo somente os 50 registros mais recentes.
+select c.nome, p.id_pedido, p.data_pedido, pr.nome, ca.nome, pi.quantidade, pi.preco_unitario
+from cliente as c
+inner join
+pedido as p
+on c.id_cliente = p.id_cliente
+inner join
+pedido_item as pi
+on p.id_pedido = pi.id_pedido
+inner join
+produto as pr
+on pr.id_produto = pi.id_produto
+inner join
+categoria as ca
+on pr.id_categoria = ca.id_categoria
+order by p.data_pedido desc limit 50;
+
+-- 2. Construa uma simulação de FULL OUTER JOIN entre cliente e pedido, utilizando LEFT JOIN, RIGHT JOIN e UNION. 
+select c.id_cliente, c.nome, p.id_pedido
+from cliente as c
+left join
+pedido as p
+on c.id_cliente = p.id_cliente
+
+union
+
+select c.id_cliente, c.nome, p.id_pedido
+from cliente as c
+right join
+pedido as p
+on c.id_cliente = p.id_cliente;
+
+
+
+/*    _____________       __          __      __      __                _________            _____________         _                 __        ________________  
+     |   __________|     |  \        |  |    |  |    |  |              |   ___    \         |   _______   |       | |              /  /        |___________    | 
+     |  |                |    \      |  |    |  |    |  |              |  |    \   \        |  |       |  |       | |            /  /                      /  /  
+     |  |_______         |  |\  \    |  |    |  |    |  |              |  |     \   \       |  |       |  |       | |          /  /                       /  /   
+     |   _______|        |  |  \  \  |  |    |  |    |  |              |  |      |   |      |  |       |  |       | |         /  /_____                  /  /    
+     |  |                |  |    \  \|  |    |  |    |  |              |  |      |   |      |  |       |  |       | |        |   ____   \               /  /     
+     |  |                |  |     \     |    |  |    |  |              |  |     /   /       |  |       |  |       |_|        |  |    |  |              /  /      
+     |  |__________      |  |       \   |    |  |    |  |_________     |  |____/   /        |  |_______|  |        _         \  |____|  |             /  /       
+     |_____________|     |__|        \__|    |__|    |____________|    |_________/          |_____________|       |_|         \________/             /__/        
 */
-
